@@ -1,0 +1,56 @@
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        result = []
+
+        top, bottom = 0, len(matrix) - 1
+        left, right = 0, len(matrix[0]) - 1
+
+        while left <= right and top <= bottom:
+
+            for i in range(left, right + 1):
+                result.append(matrix[top][i])
+            top += 1
+
+            for i in range(top, bottom + 1):
+                result.append(matrix[i][right])
+            right -= 1
+
+            if top <= bottom:
+                for i in range(right, left - 1, -1):
+                    result.append(matrix[bottom][i])
+                bottom -= 1
+
+            if left <= right:
+                for i in range(bottom, top - 1, -1):
+                    result.append(matrix[i][left])
+                left += 1
+
+        return result
+
+-------------------------------------------------------------------------------------
+
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        m, n = len(matrix), len(matrix[0])
+        visited = [[False] * n for _ in range(m)]
+
+        directions = [(0,1), (1,0), (0,-1), (-1,0)]
+        d = 0
+        row = col = 0
+        result = []
+
+        for _ in range(m * n):
+            result.append(matrix[row][col])
+            visited[row][col] = True
+
+            nr = row + directions[d][0]
+            nc = col + directions[d][1]
+
+            if 0 <= nr < m and 0 <= nc < n and not visited[nr][nc]:
+                row, col = nr, nc
+            else:
+                d = (d + 1) % 4
+                row += directions[d][0]
+                col += directions[d][1]
+
+        return result
