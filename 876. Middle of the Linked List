@@ -1,0 +1,29 @@
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        length = 0
+        temp = head
+
+        while temp:
+            length += 1
+            temp = temp.next
+
+        mid = length // 2
+        temp = head
+
+        for _ in range(mid):
+            temp = temp.next
+
+        return temp
+
+-----------------------------------------------------------------------------------------
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
+
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
