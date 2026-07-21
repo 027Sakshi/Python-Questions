@@ -1,0 +1,53 @@
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+
+        def merge_sort(arr):
+            if len(arr) <= 1:
+                return arr
+
+            mid = len(arr) // 2
+            left = merge_sort(arr[:mid])
+            right = merge_sort(arr[mid:])
+
+            result = []
+            i = j = 0
+
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    result.append(left[i])
+                    i += 1
+                else:
+                    result.append(right[j])
+                    j += 1
+
+            result.extend(left[i:])
+            result.extend(right[j:])
+
+            return result
+
+        return merge_sort(nums)
+
+---------------------------------------------------------------------------
+
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+
+        def quick_sort(left, right):
+            if left >= right:
+                return
+
+            pivot = nums[right]
+            i = left
+
+            for j in range(left, right):
+                if nums[j] <= pivot:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    i += 1
+
+            nums[i], nums[right] = nums[right], nums[i]
+
+            quick_sort(left, i - 1)
+            quick_sort(i + 1, right)
+
+        quick_sort(0, len(nums) - 1)
+        return nums
