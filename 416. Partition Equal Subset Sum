@@ -1,0 +1,22 @@
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+
+        if total % 2:
+            return False
+
+        target = total // 2
+        dp = {0}
+
+        for num in nums:
+            new = set()
+
+            for s in dp:
+                if s + num == target:
+                    return True
+                new.add(s)
+                new.add(s + num)
+
+            dp = new
+
+        return target in dp
